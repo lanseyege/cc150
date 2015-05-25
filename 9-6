@@ -1,0 +1,57 @@
+实现一种算法，打印n对括号的全部有效组合
+示例：输入 3
+      输出 ((()))  (()())  (())()  ()(())  ()()()
+dp问题，这个问题的关键是怎样存储中间结果
+我们来分析一下这个问题，假如输入1，那么输出(), 输入2，输出()() (())，我们知道
+左右括号是配对的，知道了所有左括号的位置，则就知道了整个括号串。我们可以将左边
+括号在括号串的位置记录下来，暂以做括号的位置信息代替括号串，可从1开始，我们可以看到，
+输入1，输出1
+输入2，输出12 13
+输入3，输出123 124 125 134 135
+仔细观察上面，我们可以找出一下的规律：当输入2时，相当于在1后面分别加上大于1 小于2×n
+的数，当输入3时，相当于在输入2时得到的字符串后面分别加上大于最后一个字符表示的值，小于
+2×n的一个数，这样，我们就得到了迭代公式
+
+若使用迭代来做，则中间结果需要保存，我们可以用ArrayList来保存，每次都要取出上一次所得到
+的字符串，在其后面追加一个数（大于字符串最后一个字符表示的数，小于2×n），然后将新得到的
+字符串存入ArrayList，这里，要记录每次迭代字符串在ArrayList里的位置。
+代码如下：
+public void fun(int n){
+  List<String> list = new ArrayList<String>();
+  list.add("(");
+  int start=0,end=0;
+  for(int i=2;i<=n;i++){
+    int in=0;
+    for(int j=start;j<=end;j++){
+      String temp=list.get(j);
+      int m=temp.charAt(temp.length()-1)-'0';
+      for(int k=m+1;k<2*n;k++){
+        list.add(temp+""+k);
+        in++;
+      }
+    }
+    start=end+1;
+    end=end+in;
+  }
+  for(int i=start;i<=end;i++){
+    print_it(list.get(i));
+  }
+}
+//打印括号的辅助函数
+public void print_it(String temp){
+  out.print("(");
+		int k=1;
+		for(int i=1;i<=temp.length()-1;i++){
+			int s=temp.charAt(i)-'0' -k -1;
+			k=k+s+1;
+			while(s>0){
+				out.print(")");
+				s--;
+			}
+			out.print("(");
+		}
+		for(int i=k;i<2*temp.length();i++)
+			out.print(")");
+		out.println();
+}
+当然，也可以使用递归方式来做，但是中间结果怎么保存，还没有想好
