@@ -1,0 +1,61 @@
+问题描述：给定数量不限的硬币，25、10、5和1分，编写代码计算n分有几种不同表示方法
+解法：划分子问题，假设n=100，则可将问题分为包含 0个25、1个25、2个25、3个25、4个25四个子问题，等价于 (100 0个25)，
+(75 0个25) (50 0个25) (25 0个25) (0 0个25), 其中每个子问题可以再次往下分，比如 (100 0个25) 可划分(100 0个25 0个10 0个5 100个1)
+等等...
+代码:
+#include<iostream>
+using namespace std;
+
+int count=0;
+void my_change(int n, int k){
+  if(n<0)
+    return;
+  if(n==0){
+    count++;
+    return;
+  }
+  switch(k){
+    case 25:
+      for(int i=0;i<=n/25;i++)
+        my_change(n-i*25,10);
+      break;
+    case 10:
+      for(int i=0;i<=n/10;i++)
+        my_change(n-i*10,5);
+      break;
+    case 5:
+      for(int i=0;i<=n/5;i++)
+        my_change(n-i*5,1);
+      break;
+    case 1:
+      count++;
+      break;
+    default:
+      break;
+  }
+}
+另一种代码形式，闭上一种要好看
+代码：
+int my_change(int n, int k){
+  int n_k;
+  switch(k){
+    case 50:
+      n_k=25;
+      break;
+    case 25:
+      n_k=10;
+      break;
+    case 10:
+      n_k=5;
+      break;
+    case 5:
+      n_k=1;
+      break;
+    case 1:
+      return 1;
+  }
+  int ways=0;
+  for(int i=0;i*k<=n;i++)
+    ways+=make_change(n-i*k,n_k);
+  return ways;
+}
