@@ -39,9 +39,6 @@ void my_change(int n, int k){
 int my_change(int n, int k){
   int n_k;
   switch(k){
-    case 50:
-      n_k=25;
-      break;
     case 25:
       n_k=10;
       break;
