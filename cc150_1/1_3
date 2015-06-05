@@ -1,0 +1,20 @@
+给定两个字符串，判断其中一个字符串的字符重新排列后，能否变成另一个字符
+
+hash的思想
+
+boolean fun(String A, String B) {
+	if(A.length()!=B.length())
+		return false;
+	int hash[] = new int[256];
+	for(int i=0; i<256; i++)
+		hash[i]=0;
+	for(int i=0; i<A.length(); i++) {
+		hash[A.charAt(i)] ++;
+	}
+	for(int i=0; i<B.length(); i++) {
+		hash[B.charAt(i)]--;
+		if(hash[B.charAt(i)] < 0)
+			return false;
+	}
+	return true;
+}
