@@ -1,0 +1,16 @@
+用c或c++实现void reverse(char* str)函数，即反转一个null结尾的字符串。
+
+void reverse(char* str) {
+	char* temp=str;
+	while(*temp!=null) {
+		*temp++;
+	}
+	--temp;
+	while(str<end) {
+		char ss = *temp;
+		*temp = *str;
+		*str = temp;
+		*temp++;
+		*str++;
+	}
+}
