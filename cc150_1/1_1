@@ -1,0 +1,18 @@
+1、实现一个算法，确定一个字符串的所有字符是否完全相等。假使不允许使用额外的数据结构，
+又该如何处理？
+
+字符的总数是一定的，若是ASCII码，则有256个，可以使用数组来实现hash的功能
+
+boolean is_have(String str) {
+	int n = str.length();
+	int A[] = new int[256];
+	for(int i=0; i<256; i++)
+		A[i] = 0;
+	for(int i=0; i<n; i++) {
+		if(A[str.charAt(i)>1)
+			return false;
+		else
+			A[str.charAt(i)] ++;
+	}
+	return true;
+}
