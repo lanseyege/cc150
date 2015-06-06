@@ -1,0 +1,10 @@
+
+boolean is_rere(List node) {
+	if(node == null || node.next == null)
+		return true;
+	int n=0;
+	while(node != null) {
+		n++; node = node.next;
+	}
+	
+}
